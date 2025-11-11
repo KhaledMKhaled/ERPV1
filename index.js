@@ -105,7 +105,10 @@ var vite_config_default = defineConfig({
       strict: true,
       deny: ["**/.*"]
     }
-  }
+  },
+  // ✅ Add base for GitHub Pages
+  base: "/ERPV1/"
+  // Replace ERPV1 with your repo name
 });
 
 // server/vite.ts
