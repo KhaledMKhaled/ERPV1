@@ -44,29 +44,26 @@ const menuItems = [
     title: "Sales",
     icon: ShoppingCart,
     items: [
-      { title: "Invoices", url: "/sales/invoices" },
-      { title: "Quotations", url: "/sales/quotations" },
-      { title: "Customers", url: "/sales/customers" },
-      { title: "Sales Reports", url: "/sales/reports" },
+      { title: "Invoice", url: "/sales/invoice" },
+      { title: "Receipts", url: "/sales/receipts" },
+      { title: "Payment", url: "/sales/payment" },
+      { title: "Clients", url: "/sales/clients" },
     ],
   },
   {
     title: "Purchase",
     icon: Package,
     items: [
-      { title: "Purchase Orders", url: "/purchase/orders" },
-      { title: "Suppliers", url: "/purchase/suppliers" },
-      { title: "Purchase Reports", url: "/purchase/reports" },
+      { title: "Bills", url: "/purchase/bills" },
+      { title: "Vendors", url: "/purchase/vendors" },
     ],
   },
   {
     title: "Item",
     icon: FileText,
     items: [
-      { title: "Products", url: "/items/products" },
-      { title: "Services", url: "/items/services" },
-      { title: "Inventory", url: "/items/inventory" },
-      { title: "Categories", url: "/items/categories" },
+      { title: "Code", url: "/items/code" },
+      { title: "Settings", url: "/items/settings" },
     ],
   },
   {
@@ -87,8 +84,8 @@ const menuItems = [
     title: "Profile",
     icon: User,
     items: [
+      { title: "Company's", url: "/profile/company" },
       { title: "Settings", url: "/profile/settings" },
-      { title: "Preferences", url: "/profile/preferences" },
     ],
   },
 ];
