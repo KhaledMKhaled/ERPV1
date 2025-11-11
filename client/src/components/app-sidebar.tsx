@@ -22,7 +22,8 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { useLocation } from "wouter";
-import { useToast } from "@/hooks/use-toast";
+import { UpgradeDialog } from "@/components/upgrade-dialog";
+import { useState } from "react";
 
 interface UserProfile {
   name: string;
@@ -94,7 +95,7 @@ const menuItems = [
 
 export function AppSidebar({ user }: AppSidebarProps) {
   const [location] = useLocation();
-  const { toast } = useToast();
+  const [upgradeDialogOpen, setUpgradeDialogOpen] = useState(false);
 
   return (
     <Sidebar>
@@ -135,16 +136,12 @@ export function AppSidebar({ user }: AppSidebarProps) {
                       <SidebarMenuItem>
                         <CollapsibleTrigger asChild disabled={isLocked}>
                           <SidebarMenuButton
-                            className={isLocked ? "opacity-50 cursor-not-allowed" : "hover-elevate active-elevate-2"}
+                            className={isLocked ? "opacity-50 cursor-pointer" : "hover-elevate active-elevate-2"}
                             data-testid={`button-nav-${item.title.toLowerCase()}`}
                             onClick={(e) => {
                               if (isLocked) {
                                 e.preventDefault();
-                                toast({
-                                  title: "Premium Feature",
-                                  description: "Accounting module requires a paid subscription. Please upgrade to access this feature.",
-                                  variant: "destructive",
-                                });
+                                setUpgradeDialogOpen(true);
                               }
                             }}
                           >
@@ -230,6 +227,7 @@ export function AppSidebar({ user }: AppSidebarProps) {
         </SidebarMenu>
         <p className="text-xs text-muted-foreground text-center mt-3">v1.0.0</p>
       </SidebarFooter>
+      <UpgradeDialog open={upgradeDialogOpen} onOpenChange={setUpgradeDialogOpen} />
     </Sidebar>
   );
 }
