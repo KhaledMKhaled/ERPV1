@@ -131,52 +131,57 @@ export function AppSidebar({ user }: AppSidebarProps) {
               {menuItems.map((item) => {
                 if (item.items) {
                   const isLocked = 'locked' in item && item.locked;
+                  
+                  if (isLocked) {
+                    return (
+                      <SidebarMenuItem key={item.title}>
+                        <SidebarMenuButton
+                          className="opacity-50 cursor-pointer hover-elevate active-elevate-2"
+                          data-testid={`button-nav-${item.title.toLowerCase()}`}
+                          onClick={() => setUpgradeDialogOpen(true)}
+                        >
+                          <item.icon className="h-4 w-4" />
+                          <span className="flex items-center gap-2">
+                            {item.title}
+                            <Badge variant="secondary" className="text-xs px-1.5 py-0">Pro</Badge>
+                          </span>
+                          <Lock className="ml-auto h-4 w-4 text-muted-foreground" />
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    );
+                  }
+                  
                   return (
                     <Collapsible key={item.title} defaultOpen={item.title === "Report"} className="group/collapsible">
                       <SidebarMenuItem>
-                        <CollapsibleTrigger asChild disabled={isLocked}>
+                        <CollapsibleTrigger asChild>
                           <SidebarMenuButton
-                            className={isLocked ? "opacity-50 cursor-pointer" : "hover-elevate active-elevate-2"}
+                            className="hover-elevate active-elevate-2"
                             data-testid={`button-nav-${item.title.toLowerCase()}`}
-                            onClick={(e) => {
-                              if (isLocked) {
-                                e.preventDefault();
-                                setUpgradeDialogOpen(true);
-                              }
-                            }}
                           >
                             <item.icon className="h-4 w-4" />
-                            <span className="flex items-center gap-2">
-                              {item.title}
-                              {isLocked && <Badge variant="secondary" className="text-xs px-1.5 py-0">Pro</Badge>}
-                            </span>
-                            {isLocked ? (
-                              <Lock className="ml-auto h-4 w-4 text-muted-foreground" />
-                            ) : (
-                              <ChevronDown className="ml-auto h-4 w-4 transition-transform group-data-[state=open]/collapsible:rotate-180" />
-                            )}
+                            <span>{item.title}</span>
+                            <ChevronDown className="ml-auto h-4 w-4 transition-transform group-data-[state=open]/collapsible:rotate-180" />
                           </SidebarMenuButton>
                         </CollapsibleTrigger>
-                        {!isLocked && (
-                          <CollapsibleContent>
-                            <SidebarMenuSub>
-                              {item.items.map((subItem) => (
-                                <SidebarMenuSubItem key={subItem.title}>
-                                  <SidebarMenuSubButton
-                                    asChild
-                                    isActive={location === subItem.url}
-                                    className="hover-elevate active-elevate-2"
-                                    data-testid={`link-nav-${subItem.title.toLowerCase().replace(/\s+/g, '-')}`}
-                                  >
-                                    <a href={subItem.url}>
-                                      <span>{subItem.title}</span>
-                                    </a>
-                                  </SidebarMenuSubButton>
-                                </SidebarMenuSubItem>
-                              ))}
-                            </SidebarMenuSub>
-                          </CollapsibleContent>
-                        )}
+                        <CollapsibleContent>
+                          <SidebarMenuSub>
+                            {item.items.map((subItem) => (
+                              <SidebarMenuSubItem key={subItem.title}>
+                                <SidebarMenuSubButton
+                                  asChild
+                                  isActive={location === subItem.url}
+                                  className="hover-elevate active-elevate-2"
+                                  data-testid={`link-nav-${subItem.title.toLowerCase().replace(/\s+/g, '-')}`}
+                                >
+                                  <a href={subItem.url}>
+                                    <span>{subItem.title}</span>
+                                  </a>
+                                </SidebarMenuSubButton>
+                              </SidebarMenuSubItem>
+                            ))}
+                          </SidebarMenuSub>
+                        </CollapsibleContent>
                       </SidebarMenuItem>
                     </Collapsible>
                   );
