@@ -97,7 +97,8 @@ var vite_config_default = defineConfig({
   },
   root: path.resolve(import.meta.dirname, "client"),
   build: {
-    outDir: path.resolve(import.meta.dirname, "dist/public"),
+    // ✅ Output directly to "dist" for GitHub Pages
+    outDir: path.resolve(import.meta.dirname, "dist"),
     emptyOutDir: true
   },
   server: {
@@ -106,9 +107,8 @@ var vite_config_default = defineConfig({
       deny: ["**/.*"]
     }
   },
-  // ✅ Add base for GitHub Pages
+  // ✅ Required for GitHub Pages (replace ERPV1 with your repo name)
   base: "/ERPV1/"
-  // Replace ERPV1 with your repo name
 });
 
 // server/vite.ts
