@@ -1,13 +1,11 @@
 import { type User, type InsertUser } from "@shared/schema";
 import { randomUUID } from "crypto";
 
-// modify the interface with any CRUD methods
-// you might need
-
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
+  updateUserPoints(id: string, points: number): Promise<User | undefined>;
 }
 
 export class MemStorage implements IStorage {
@@ -15,6 +13,16 @@ export class MemStorage implements IStorage {
 
   constructor() {
     this.users = new Map();
+    // todo: remove mock functionality - Initialize with mock user
+    const mockUser: User = {
+      id: "1",
+      username: "mohammad",
+      password: "password",
+      fullName: "Mohammed Mahyeddin",
+      role: "Manager",
+      points: 2450,
+    };
+    this.users.set(mockUser.id, mockUser);
   }
 
   async getUser(id: string): Promise<User | undefined> {
@@ -29,8 +37,22 @@ export class MemStorage implements IStorage {
 
   async createUser(insertUser: InsertUser): Promise<User> {
     const id = randomUUID();
-    const user: User = { ...insertUser, id };
+    const user: User = { 
+      ...insertUser, 
+      id, 
+      points: 0,
+      role: insertUser.role || "User"
+    };
     this.users.set(id, user);
+    return user;
+  }
+
+  async updateUserPoints(id: string, points: number): Promise<User | undefined> {
+    const user = this.users.get(id);
+    if (user) {
+      user.points = points;
+      this.users.set(id, user);
+    }
     return user;
   }
 }
